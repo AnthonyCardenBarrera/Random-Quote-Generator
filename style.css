@@ -1,0 +1,8 @@
+.test {
+  background-color: red;
+  height: 100vh;
+}
+.box {
+  background-color: white;
+  border: solid 5px;
+}

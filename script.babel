@@ -1,0 +1,51 @@
+const API =
+  "https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json";
+
+class Application extends React.Component {
+  state = {
+    quotes: [],
+    index: 0
+  };
+  componentDidMount() {
+    fetch(API)
+      .then((res) => res.json())
+      .then((res) => {
+        this.setState({ quotes: res.quotes });
+      });
+  }
+  
+  handleQuote() {
+    const randomNumber = Math.floor(Math.random() * this.state.quotes.length);
+    this.setState({
+      index: randomNumber
+    });
+  }
+  
+  render() {
+    const { quotes, index } = this.state;
+    const quote = quotes[index];
+
+    return (
+      <div className="test d-flex  align-items-center justify-content-center" id ="quote-box">
+        <div className="box p-3">
+          <div className="row justify-content-center">
+            <div className="col-4" id="text">
+              {quote && <p>{quote.quote}</p>}
+              <div id= "author">
+              {quote && <p>-{quote.author}</p>}
+              </div>
+            </div>
+          </div>
+          <div className="row justify-content-center">
+            <div class="col-4">
+              <a id = "tweet-quote" href = "twitter.com/intent/tweet">share to twitter</a>
+            </div>
+            <button id="new-quote"onClick= {this.handleQuote.bind(this)}>New Quote</button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<Application />, document.getElementById("app"));
